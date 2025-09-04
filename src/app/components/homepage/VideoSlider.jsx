@@ -31,7 +31,7 @@ export default function VideoSlider() {
 
       {/* Navbar */}
       <header className="absolute top-0 left-0 w-full z-20 flex justify-between items-center px-6 py-4 text-white">
-        <div className="text-2xl font-bold">Incredible India</div>
+        <div className="text-2xl font-bold">Joyful Jharkhand</div>
         <nav className="hidden md:flex gap-6 text-sm font-medium">
           <a href="#" className="hover:text-yellow-400">Destinations</a>
           <a href="#" className="hover:text-yellow-400">Experiences</a>
