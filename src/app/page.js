@@ -5,6 +5,7 @@ import DistrictGems from "./components/homepage/District-gems";
 import Footer from "./components/homepage/Footer";
 import TourismLeaders from "./components/homepage/Message";
 import JharkhandMap from "./components/homepage/JharkhandMap";
+import Handicrafts from "./components/homepage/Handicrafts";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <VideoSlider />
       <Chatbot />
       <DistrictGems />
+      <Handicrafts />
       <TourismLeaders />
       <JharkhandMap />
       <Footer />
