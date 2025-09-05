@@ -55,7 +55,7 @@ const DistrictGems = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="w-[100vw] mx-auto py-10 relative">
+<div className="w-[100vw] mx-auto py-10 relative">
 {/* 🔹 Background Image */}
 <Image
   src="/images/bg-nature.jpg"
