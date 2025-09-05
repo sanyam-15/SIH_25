@@ -1,26 +1,31 @@
-"use client"; // (only if you're in Next.js app directory)
+"use client";
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FiSend, FiX } from "react-icons/fi";
+import { BsRobot, BsPerson } from "react-icons/bs";
 
 export default function Chatbot() {
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi Nishant 👋! How can I help you today?" }
+    { sender: "bot", text: "नमस्ते, झारखंड!" }
   ]);
   const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
   const chatEndRef = useRef(null);
 
-  // 🔹 Auto scroll chat to bottom
+  // Auto scroll
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, isTyping]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
 
     const userMessage = { sender: "user", text: input };
     setMessages(prev => [...prev, userMessage]);
+    setInput("");
+    setIsTyping(true);
 
     try {
       const res = await fetch("https://h4b-chatbot-backend.onrender.com/chat", {
@@ -36,25 +41,24 @@ export default function Chatbot() {
       });
 
       const data = await res.json();
-      console.log("Backend Response:", data);
       const botMessage = { sender: "bot", text: data.response };
       setMessages(prev => [...prev, botMessage]);
-    } catch (err) {
+    } catch {
       setMessages(prev => [
         ...prev,
         { sender: "bot", text: "⚠ Error: Could not reach backend." }
       ]);
+    } finally {
+      setIsTyping(false);
     }
-
-    setInput("");
   };
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
-      {/* Toggle Button */}
+      {/* Floating Button */}
       <button
         onClick={() => setShowChat(!showChat)}
-        className="w-16 h-16 rounded-full bg-green-600 text-white flex items-center justify-center shadow-lg hover:bg-green-700 transition text-2xl"
+        className="w-16 h-16 rounded-full bg-gradient-to-r from-green-500 to-emerald-600 text-white flex items-center justify-center shadow-xl hover:scale-105 transition-transform text-3xl hover:cursor-pointer"
       >
         💬
       </button>
@@ -63,54 +67,78 @@ export default function Chatbot() {
       <AnimatePresence>
         {showChat && (
           <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 50 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 50 }}
-            className="absolute bottom-20 right-0 w-80 bg-white rounded-xl shadow-xl flex flex-col overflow-hidden"
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+            className="absolute bottom-20 right-0 w-80 h-120 sm:w-96 bg-white/80 backdrop-blur-xl rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-200"
           >
             {/* Header */}
-            <div className="bg-green-600 text-white p-3 font-semibold flex justify-between items-center">
-              <span>Chatbot</span>
-              <button
-                onClick={() => setShowChat(false)}
-                className="text-white text-lg font-bold"
-              >
-                ×
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-3 font-semibold flex justify-between items-center">
+              <span className="flex items-center gap-2">
+                <BsRobot className="text-xl" /> Chatbot
+              </span>
+              <button onClick={() => setShowChat(false)}>
+                <FiX className="text-xl" />
               </button>
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-2 max-h-64">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-90 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
               {messages.map((msg, i) => (
-                <div
+                <motion.div
                   key={i}
-                  className={`p-2 rounded-lg max-w-[75%] ${
-                    msg.sender === "user"
-                      ? "bg-green-600 text-white ml-auto"
-                      : "bg-gray-200 text-gray-800"
+                  initial={{ opacity: 0, x: msg.sender === "user" ? 30 : -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className={`flex items-end gap-2 ${
+                    msg.sender === "user" ? "justify-end" : "justify-start"
                   }`}
                 >
-                  {msg.text}
-                </div>
+                  {msg.sender === "bot" && (
+                    <BsRobot className="text-green-600 text-lg shrink-0" />
+                  )}
+                  <div
+                    className={`px-4 py-2 rounded-2xl text-sm shadow ${
+                      msg.sender === "user"
+                        ? "bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-br-none"
+                        : "bg-gray-100 text-gray-800 rounded-bl-none"
+                    }`}
+                  >
+                    {msg.text}
+                  </div>
+                  {msg.sender === "user" && (
+                    <BsPerson className="text-gray-500 text-lg shrink-0" />
+                  )}
+                </motion.div>
               ))}
+
+              {/* Typing Indicator */}
+              {isTyping && (
+                <div className="flex items-center gap-2 text-gray-500 text-sm">
+                  <BsRobot className="text-green-600" />
+                  <span className="animate-pulse">Typing...</span>
+                </div>
+              )}
+
               <div ref={chatEndRef} />
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-gray-200 flex gap-2">
+            <div className=" p-3 border-t border-gray-200 flex gap-2">
               <input
                 type="text"
                 value={input}
                 onChange={e => setInput(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && sendMessage()}
                 placeholder="Type your message..."
-                className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:border-green-500"
+                className="flex-1 border rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400 text-black"
               />
               <button
                 onClick={sendMessage}
-                className="bg-green-600 text-white px-3 py-2 rounded-lg hover:bg-green-700"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform flex items-center gap-1 hover:cursor-pointer"
               >
-                Send
+                <FiSend />
               </button>
             </div>
           </motion.div>
