@@ -8,7 +8,7 @@ import { BsRobot, BsPerson } from "react-icons/bs";
 export default function Chatbot() {
   const [showChat, setShowChat] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hi Nishant 👋! How can I help you today?" }
+    { sender: "bot", text: "नमस्ते, झारखंड!" }
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -84,7 +84,7 @@ export default function Chatbot() {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-72 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+            <div className="flex-1 p-4 overflow-y-auto space-y-3 max-h-90 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
               {messages.map((msg, i) => (
                 <motion.div
                   key={i}
@@ -125,7 +125,7 @@ export default function Chatbot() {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-gray-200 flex gap-2">
+            <div className=" p-3 border-t border-gray-200 flex gap-2">
               <input
                 type="text"
                 value={input}
@@ -136,7 +136,7 @@ export default function Chatbot() {
               />
               <button
                 onClick={sendMessage}
-                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform flex items-center gap-1"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-2 rounded-xl shadow hover:scale-105 transition-transform flex items-center gap-1 hover:cursor-pointer"
               >
                 <FiSend />
               </button>
