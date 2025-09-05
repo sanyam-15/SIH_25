@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -53,20 +53,38 @@ const DistrictGems = () => {
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visibleCount, setVisibleCount] = useState(5); // default desktop
+
+  // 🔹 Responsive handling
+  useEffect(() => {
+    const updateCount = () => {
+      if (window.innerWidth < 640) {
+        setVisibleCount(1); // mobile
+      } else if (window.innerWidth < 1024) {
+        setVisibleCount(3); // tablet
+      } else {
+        setVisibleCount(5); // desktop
+      }
+    };
+
+    updateCount();
+    window.addEventListener("resize", updateCount);
+    return () => window.removeEventListener("resize", updateCount);
+  }, []);
 
   return (
-<div className="w-[100vw] mx-auto py-10 relative">
-{/* 🔹 Background Image */}
-<Image
-  src="/images/bg-nature.jpg"
-  alt="Background"
-  fill
-  className="absolute inset-0 object-cover -z-20 filter grayscale saturate-50"
-  priority
-/>
+    <div className="w-[100vw] mx-auto py-10 relative">
+      {/* 🔹 Background Image */}
+      <Image
+        src="/images/bg-nature.jpg"
+        alt="Background"
+        fill
+        className="absolute inset-0 object-cover -z-20 filter grayscale saturate-50"
+        priority
+      />
 
-{/* 🔹 Black Overlay */}
-<div className="absolute inset-0 bg-white/60 -z-10" />
+      {/* 🔹 Black Overlay */}
+      <div className="absolute inset-0 bg-white/60 -z-10" />
 
       {/* Heading */}
       <h2 className="text-2xl text-black sm:text-3xl font-bold text-center mb-10">
@@ -80,48 +98,44 @@ const DistrictGems = () => {
             (index - activeIndex + tourismData.length) % tourismData.length;
 
           let style = {};
+          const gap = visibleCount === 1 ? 0 : 240; // spacing
+          const scale = visibleCount === 1 ? 1 : 0.9;
+
           if (position === 0) {
-            // Center
             style = {
               transform: "translateX(0) scale(1) rotateY(0deg)",
               zIndex: 50,
               opacity: 1,
             };
-          } else if (position === 1) {
-            // Right side
+          } else if (position === 1 && visibleCount > 1) {
             style = {
-              transform: "translateX(240px) scale(0.9) rotateY(-25deg)",
+              transform: `translateX(${gap}px) scale(${scale}) rotateY(-25deg)`,
               zIndex: 40,
               opacity: 1,
             };
-          } else if (position === tourismData.length - 1) {
-            // Left side
+          } else if (position === tourismData.length - 1 && visibleCount > 1) {
             style = {
-              transform: "translateX(-240px) scale(0.9) rotateY(25deg)",
+              transform: `translateX(-${gap}px) scale(${scale}) rotateY(25deg)`,
               zIndex: 40,
               opacity: 1,
             };
-          } else if (position === 2) {
-            // Far right
+          } else if (position === 2 && visibleCount > 3) {
             style = {
-              transform: "translateX(420px) scale(0.8) rotateY(-40deg)",
+              transform: `translateX(${gap * 1.75}px) scale(0.8) rotateY(-40deg)`,
               zIndex: 20,
               opacity: 1,
             };
-          } else if (position === tourismData.length - 2) {
-            // Far left
+          } else if (
+            position === tourismData.length - 2 &&
+            visibleCount > 3
+          ) {
             style = {
-              transform: "translateX(-420px) scale(0.8) rotateY(40deg)",
+              transform: `translateX(-${gap * 1.75}px) scale(0.8) rotateY(40deg)`,
               zIndex: 20,
               opacity: 1,
             };
           } else {
-            // Hidden
-            style = {
-              transform: "scale(0.6)",
-              zIndex: 10,
-              opacity: 0,
-            };
+            style = { transform: "scale(0.6)", zIndex: 10, opacity: 0 };
           }
 
           return (
@@ -131,14 +145,13 @@ const DistrictGems = () => {
               className="absolute w-[360px] h-[480px] rounded-xl shadow-lg transition-all duration-700 ease-in-out overflow-hidden group"
             >
               {/* Background Image */}
-           <Image
-  src={place.image}
-  alt={place.name}
-  width={360}   // or actual image width
-  height={480}  // or actual image height
-  className="object-contain rounded-xl"
-/>
-
+              <Image
+                src={place.image}
+                alt={place.name}
+                width={360}
+                height={480}
+                className="object-contain rounded-xl"
+              />
 
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
@@ -176,9 +189,6 @@ const DistrictGems = () => {
           &#8594;
         </button>
       </div>
-
-      {/* View All */}
-
     </div>
   );
 };
