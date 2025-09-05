@@ -23,7 +23,7 @@ export default function UttarPradeshMap() {
             geographies.map((geo) => {
               const district =
                 geo.properties?.District ||
-                geo.properties?.DISTRICT || // many datasets use caps
+                geo.properties?.DISTRICT || 
                 geo.properties?.name;
 
               return (
