@@ -1,10 +1,36 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useMemo } from "react";
 import { Menu, Search, User, Heart } from "lucide-react";
 
 export default function VideoSlider() {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
+  const categories = useMemo(
+    () => [
+      "Jharkhand 360",
+      "Adventure",
+      "Nature",
+      "Wildlife",
+      "Heritage",
+      "Spiritual",
+    ],
+    []
+  );
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const categoryToVideo = useMemo(
+    () => ({
+      "Jharkhand 360": "/videos/drone-360.mp4",
+      Adventure: "/videos/Festival.mp4",
+      Nature: "/videos/Nature.mp4",
+      Wildlife: "/videos/Nature.mp4",
+      Heritage: "/videos/Festival.mp4",
+      Spiritual: "/videos/Festival.mp4",
+    }),
+    []
+  );
+
+  const currentVideoSrc = categoryToVideo[categories[activeIndex]];
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -18,7 +44,8 @@ export default function VideoSlider() {
       {/* Video Background */}
       <video
         ref={videoRef}
-        src="/videos/drone-360.mp4"
+        key={currentVideoSrc}
+        src={currentVideoSrc}
         autoPlay
         loop
         muted={isMuted}
@@ -58,13 +85,18 @@ export default function VideoSlider() {
 
       {/* Categories */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-6 text-sm text-white font-medium">
-        {["India 360", "Adventure", "Nature", "Wildlife", "Heritage", "Spiritual"].map((item, i) => (
+        {categories.map((item, i) => (
           <button
-            key={i}
-            className={`relative ${i === 0 ? "text-yellow-400" : "hover:text-yellow-400"}`}
+            key={item}
+            onClick={() => setActiveIndex(i)}
+            className={`relative transition-colors ${
+              i === activeIndex ? "text-yellow-400" : "hover:text-yellow-400"
+            }`}
           >
             {item}
-            <span className="absolute -right-3 top-1/2 -translate-y-1/2 w-px h-4 bg-white/50" />
+            {i < categories.length - 1 && (
+              <span className="absolute -right-3 top-1/2 -translate-y-1/2 w-px h-4 bg-white/50" />
+            )}
           </button>
         ))}
       </div>
@@ -77,8 +109,20 @@ export default function VideoSlider() {
         >
           {isMuted ? "🔇" : "🔊"}
         </button>
-        <button className="p-2 bg-black/40 rounded-full">←</button>
-        <button className="p-2 bg-black/40 rounded-full">→</button>
+        <button
+          onClick={() =>
+            setActiveIndex((prev) => (prev - 1 + categories.length) % categories.length)
+          }
+          className="p-2 bg-black/40 rounded-full"
+        >
+          ←
+        </button>
+        <button
+          onClick={() => setActiveIndex((prev) => (prev + 1) % categories.length)}
+          className="p-2 bg-black/40 rounded-full"
+        >
+          →
+        </button>
       </div>
     </div>
   );
