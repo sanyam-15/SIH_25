@@ -3,7 +3,7 @@ import Chatbot from "./components/Chatbot";
 import VideoSlider from "./components/homepage/VideoSlider";
 import DistrictGems from "./components/homepage/District-gems";
 import Footer from "./components/homepage/Footer";
-import JharkhandMap from "./components/homepage/JharkhandMap";
+import TourismLeaders from "./components/homepage/Message";
 
 export default function Home() {
   return (
@@ -12,8 +12,8 @@ export default function Home() {
       <VideoSlider />
       <Chatbot />
       <DistrictGems />
-      <JharkhandMap />
-      <Footer />
+      <TourismLeaders />;
+      <Footer/>
     </div>
   );
 }
