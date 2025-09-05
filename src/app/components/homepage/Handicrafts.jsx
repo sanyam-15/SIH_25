@@ -24,6 +24,11 @@ export default function Handicrafts() {
       title: "Tasar (Tussar) Silk Weaving",
       img: "/images/districtgems/img4.jpg",
     },
+    {
+      state: "Jharkhand — Godda/Dumka",
+      title: "Tasar (Tussar) Silk Weaving",
+      img: "/images/districtgems/img4.jpg",
+    },
   ];
 
   // Build a longer list so new cards can enter from the sides
