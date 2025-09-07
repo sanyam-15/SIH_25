@@ -2,7 +2,35 @@
 import { useState } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 
-const geoUrl = "/jharkhand.json"; // put TopoJSON/GeoJSON in public folder
+// Map file in public folder
+const geoUrl = "/jharkhand.json";
+
+// Districts → Photos mapping
+const districtImages = {
+  RANCHI: [
+    "/images/districts/ranchi1.jpg",
+    "/images/districts/ranchi2.jpg",
+    "/images/districts/ranchi3.avif",
+  ],
+  DHANBAD: [
+    "/districts/dhanbad1.jpg",
+    "/districts/dhanbad2.jpg",
+  ],
+  "SARAIKELA-KHARSAWAN": [
+    "/districts/saraikela1.jpg",
+    "/districts/saraikela2.jpg",
+  ],
+  SIMDEGA: [
+    "/districts/simdega1.jpg",
+    "/districts/simdega2.jpg",
+    "/districts/simdega3.jpg",
+  ],
+  SAHIBGANJ: [
+    "/districts/sahibganj1.jpg",
+    "/districts/sahibganj2.jpg",
+  ],
+  // add more districts as needed
+};
 
 export default function JharkhandMap() {
   const [selected, setSelected] = useState(null);
@@ -63,17 +91,35 @@ export default function JharkhandMap() {
             <p className="text-gray-600">
               Detailed information about <b>{selected}</b> will be shown here.
             </p>
+
+            {/* Tags */}
             <div className="flex flex-wrap gap-2">
               <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                Population: N/A
+                Population: 
               </span>
               <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                Area: N/A
+                Area:
               </span>
               <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">
                 Language: Hindi
               </span>
             </div>
+
+            {/* ✅ District Images */}
+            {districtImages[selected] ? (
+              <div className="grid grid-cols-2 gap-3 mt-4">
+                {districtImages[selected].map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`${selected} ${i + 1}`}
+                    className="w-full h-28 object-cover rounded-lg shadow-sm"
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400 italic mt-4">No images available</p>
+            )}
           </>
         ) : (
           <div className="text-gray-500 text-center">
