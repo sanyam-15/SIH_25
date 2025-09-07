@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Chatbot from "./components/Chatbot";
 import VideoSlider from "./components/homepage/VideoSlider";
 import DistrictGems from "./components/homepage/District-gems";
