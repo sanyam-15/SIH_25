@@ -22,10 +22,14 @@ export default function Footer() {
       <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 z-10">
         {/* Brand + short blurb + socials */}
         <div className="space-y-4">
-          <div className="flex items-center gap-3">
-          <div className="text-3xl font-semibold">Jharkhand</div>
-            <div className="text-3xl font-semibold">Tourism</div>
-          </div>
+      
+                <Image
+                  src="/images/newlogo.png" 
+                  alt="Joyful Jharkhand"
+                  width={240}
+                  height={60}
+                  className="object-contain"
+                />
           <p className="text-sm leading-relaxed text-gray-300">
             Indignation and dislike men who to are so beguiled and demor indignation
             and dislike men who to are so.
