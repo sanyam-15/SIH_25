@@ -1,19 +1,13 @@
 "use client";
 import { useRef, useState, useMemo } from "react";
-import { Menu, Search, User, Heart } from "lucide-react";
 
 export default function VideoSlider() {
   const videoRef = useRef(null);
   const [isMuted, setIsMuted] = useState(true);
+  const [animate, setAnimate] = useState(false);
+
   const categories = useMemo(
-    () => [
-      "Jharkhand 360",
-      "Adventure",
-      "Nature",
-      "Wildlife",
-      "Heritage",
-      "Spiritual",
-    ],
+    () => ["Jharkhand 360", "Adventure", "Nature", "Wildlife", "Heritage", "Spiritual"],
     []
   );
   const [activeIndex, setActiveIndex] = useState(0);
@@ -36,6 +30,9 @@ export default function VideoSlider() {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
+
+      setAnimate(true);
+      setTimeout(() => setAnimate(false), 300);
     }
   };
 
@@ -55,23 +52,6 @@ export default function VideoSlider() {
 
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/40 z-10" />
-
-      {/* Navbar */}
-      <header className="absolute top-0 left-0 w-full z-20 flex justify-between items-center px-6 py-4 text-white">
-        <div className="text-2xl font-bold">Joyful Jharkhand</div>
-        <nav className="hidden md:flex gap-6 text-sm font-medium">
-          <a href="#" className="hover:text-yellow-400">Destinations</a>
-          <a href="#" className="hover:text-yellow-400">Experiences</a>
-          <a href="#" className="hover:text-yellow-400">Plan your trip</a>
-        </nav>
-        <div className="flex gap-4 items-center">
-          <span className="text-sm">EN</span>
-          <Search size={18} />
-          <User size={18} />
-          <Heart size={18} />
-          <Menu size={22} className="md:hidden" />
-        </div>
-      </header>
 
       {/* Hero Text */}
       <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white z-20 px-4">
@@ -101,14 +81,8 @@ export default function VideoSlider() {
         ))}
       </div>
 
-      {/* Controls */}
+      {/* Prev / Next Controls */}
       <div className="absolute bottom-6 left-6 z-20 flex gap-4 text-white">
-        <button
-          onClick={toggleMute}
-          className="p-2 bg-black/40 rounded-full hover:bg-black/60"
-        >
-          {isMuted ? "🔇" : "🔊"}
-        </button>
         <button
           onClick={() =>
             setActiveIndex((prev) => (prev - 1 + categories.length) % categories.length)
@@ -122,6 +96,19 @@ export default function VideoSlider() {
           className="p-2 bg-black/40 rounded-full"
         >
           →
+        </button>
+      </div>
+
+      {/* Mute / Unmute Floating Button */}
+      <div className="absolute bottom-24 right-6 z-30">
+        <button
+          id="unmuteBtn"
+          onClick={toggleMute}
+          className={`w-16 h-16 flex items-center justify-center bg-black/70 text-3xl rounded-full shadow-lg transition-transform duration-300 hover:bg-black/90 ${
+            animate ? "scale-110" : "scale-100"
+          }`}
+        >
+          {isMuted ? "🔇" : "🔊"}
         </button>
       </div>
     </div>
