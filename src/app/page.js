@@ -6,6 +6,7 @@ import TourismLeaders from "./components/homepage/Message";
 import JharkhandMap from "./components/homepage/JharkhandMap";
 import Handicrafts from "./components/homepage/Handicrafts";
 import Navbar from "./components/homepage/Navbar";
+import PlanTripForm from "./components/homepage/PlanTripForm";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
       <Handicrafts />
       <TourismLeaders />
       <JharkhandMap />
+      <PlanTripForm />
       <Footer />
     </div>
   );
