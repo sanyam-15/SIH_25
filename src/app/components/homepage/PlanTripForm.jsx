@@ -77,68 +77,81 @@ export default function PlanTripForm() {
   };
 
   return (
-    <div>
+    <div className="my-20">
       {/* Form Section */}
-      <div className="bg-gradient-to-b from-[#322d2f] to-[#3f3639] text-white p-6 w-[920px] mx-auto mb-10 rounded-2xl shadow-lg">
-        <h2 className="text-2xl font-bold mb-2">Plan Your Trip</h2>
-        <p className="text-sm mb-6">
-          Fill a few details and the assistant will generate a multilingual, customizable itinerary.
+      <div className="footer-font text-white p-8 w-[980px] max-w-full mx-auto mb-12 rounded-3xl shadow-2xl border" style={{background:'linear-gradient(180deg, rgba(46,125,50,0.95), rgba(27,94,32,0.95))', borderColor:'rgba(255,255,255,0.08)'}}>
+        <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight">Craft your Jharkhand itinerary</h2>
+        <p className="text-sm md:text-base mt-2 mb-8 opacity-90">
+          Tell us how you like to travel and we’ll generate a smart, multilingual plan with sights, food and travel tips.
         </p>
 
-        <form onSubmit={handleSubmit}>
-          <label className="block mb-2">Trip length (days): {days}</label>
-          <input
+        <form onSubmit={handleSubmit} className="grid md:grid-cols-2 gap-6">
+          <div className="md:col-span-2">
+            <label className="block mb-2 text-sm uppercase tracking-wide opacity-90">Trip length (days): <span className="font-semibold">{days}</span></label>
+            <input
             type="range"
             min="1"
             max="30"
             value={days}
             onChange={(e) => setDays(e.target.value)}
-            className="w-full mb-4"
-          />
+            className="w-full accent-[var(--color-accent)]"
+            />
+          </div>
 
-          <label className="block mb-2">Starting city</label>
-          <select
+          <div>
+            <label className="block mb-2 text-sm uppercase tracking-wide opacity-90">Starting city</label>
+            <select
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="w-full p-2 rounded text-black mb-4"
+            className="w-full p-3 rounded-lg text-black"
           >
             <option value="Ranchi">Ranchi</option>
             <option value="Delhi">Delhi</option>
             <option value="Mumbai">Mumbai</option>
             <option value="Bangalore">Bangalore</option>
-          </select>
+            </select>
+          </div>
 
-          <label className="block mb-2">Interests</label>
-          <input
+          <div>
+            <label className="block mb-2 text-sm uppercase tracking-wide opacity-90">Interests</label>
+            <input
             type="text"
             value={interests}
             onChange={(e) => setInterests(e.target.value)}
-            className="w-full p-2 rounded text-black mb-4"
-          />
+            placeholder="e.g. waterfalls, wildlife, heritage, food"
+            className="w-full p-3 rounded-lg text-black"
+            />
+          </div>
 
-          <label className="block mb-2">Budget</label>
-          <select
+          <div>
+            <label className="block mb-2 text-sm uppercase tracking-wide opacity-90">Budget</label>
+            <select
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
-            className="w-full p-2 rounded text-black mb-4"
+            className="w-full p-3 rounded-lg text-black"
           >
             <option value="Low">Low</option>
             <option value="Mid">Mid</option>
             <option value="High">High</option>
-          </select>
+            </select>
+          </div>
 
-          <button
+          <div className="md:col-span-2">
+            <button
             type="submit"
             disabled={loading}
-            className="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg font-semibold disabled:opacity-50"
+            className="w-full py-3 rounded-xl font-semibold disabled:opacity-50 shadow-md transition-colors"
+            style={{backgroundColor:'var(--color-secondary)', color:'var(--color-white)'}}
           >
             {loading ? "Planning..." : "Start Planning"}
-          </button>
+            </button>
+          </div>
         </form>
 
-        <p className="text-xs mt-4 opacity-80">
-          💡 Tip: You can change language from the top navbar. The assistant replies in your selected language.
-        </p>
+        <div className="mt-6 text-xs opacity-80 flex items-start gap-2">
+          <span>💡</span>
+          <p>Tip: Switch language from the navbar; responses adapt automatically to your choice.</p>
+        </div>
 
         {error && <p className="text-red-400 mt-4">{error}</p>}
       </div>

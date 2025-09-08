@@ -1,69 +1,24 @@
 "use client";
 import Link from "next/link";
-import { Mail, MapPin, Phone, Facebook, Instagram, Twitter } from "lucide-react";
+import { Mail, MapPin, Phone, Facebook, Instagram, Twitter, ChevronRight, MessageSquare } from "lucide-react";
 import Image from "next/image";
 
 export default function Footer() {
   return (
-   <footer className="relative text-gray-200 pt-12 pb-6 mt-10 overflow-hidden">
-  {/* 🔹 Background Image */}
-  <Image
-    src="/images/bg-nature.jpg"
-    alt="Background"
-    fill
-    className="absolute inset-0 object-cover -z-20 filter grayscale saturate-50"
-    priority
-  />
+   <footer className="relative footer-font pt-12 pb-6 mt-10 overflow-hidden text-[#ffd9a1]" style={{backgroundColor:'var(--color-secondary-dark)'}}>
+  {/* Solid brown background to match reference */}
+  <div className="absolute inset-0 -z-10" />
 
-  {/* 🔹 Overlay */}
-  <div className="absolute inset-0 bg-black/70 -z-10" />
+      {/* Heading removed to match reference layout */}
 
-      {/* Top row matching visual layout: Brand, Quick Links, Get in touch, Instagram */}
-      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 z-10">
-        {/* Brand + short blurb + socials */}
-        <div className="space-y-4">
-      
-                <Image
-                  src="/images/newlogo.png" 
-                  alt="Joyful Jharkhand"
-                  width={240}
-                  height={60}
-                  className="object-contain"
-                />
-          <p className="text-sm leading-relaxed text-gray-300">
-            Indignation and dislike men who to are so beguiled and demor indignation
-            and dislike men who to are so.
-          </p>
-          <div className="flex items-center gap-3 pt-2">
-            <Link href="#" aria-label="Facebook" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
-              <Facebook className="w-4 h-4" />
-            </Link>
-            <Link href="#" aria-label="Twitter" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
-              <Twitter className="w-4 h-4" />
-            </Link>
-            <Link href="#" aria-label="Instagram" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
-              <Instagram className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-
-        {/* Quick Links (reuse existing quick links to keep info intact) */}
+      {/* Five-column layout like reference */}
+      <div className="relative max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 z-10">
+        {/* Contact Info */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">Quick Links</h3>
-          <ul className="space-y-2">
-            <li><Link href="#">Press & Media</Link></li>
-            <li><Link href="#">Weather</Link></li>
-            <li><Link href="#">E-Brochure</Link></li>
-            <li><Link href="#">FAQs</Link></li>
-          </ul>
-        </div>
-
-        {/* Get in touch (reuse contact info) */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">Get in touch</h3>
-          <div className="space-y-3 text-sm">
+          <h3 className="text-xl font-semibold border-b pb-2 mb-4" style={{color:'var(--color-accent)', borderColor:'#6b4a31'}}>Contact Info</h3>
+          <div className="space-y-3 text-[16px]">
             <p className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-yellow-400 mt-0.5" />
+              <MapPin className="w-5 h-5 text-[#ffbf66] mt-0.5" />
               <span>
                 Directorate of Tourism, Jharkhand,<br />
                 5th Floor, FFP Building,<br />
@@ -71,87 +26,144 @@ export default function Footer() {
               </span>
             </p>
             <p className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-yellow-400" />
+              <Phone className="w-5 h-5 text-[#ffbf66]" />
               (+91) 123 456 7890
             </p>
             <p className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-yellow-400" />
+              <Mail className="w-5 h-5 text-[#ffbf66]" />
               tourism@jharkhand.gov.in
             </p>
+            <div className="flex items-center gap-3 pt-2">
+              <Link href="#" aria-label="Facebook" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+                <Facebook className="w-4 h-4" />
+              </Link>
+              <Link href="#" aria-label="Twitter" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+                <Twitter className="w-4 h-4" />
+              </Link>
+              <Link href="#" aria-label="Instagram" className="p-2 rounded-full bg-white/10 hover:bg-white/20">
+                <Instagram className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Instagram Post grid */}
+        {/* About Jharkhand */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">Instagram Post</h3>
-          <div className="grid grid-cols-3 gap-3">
-            {[1,2,3,4,5,6].map((n) => (
-              <div key={n} className="relative w-20 h-16 overflow-hidden rounded">
-                <Image
-                  src={`/images/districtgems/img${n}.jpg`}
-                  alt={`instagram ${n}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Keep old info intact: render legacy link sections below */}
-      <div className="relative max-w-7xl mx-auto px-6 mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 z-10">
-        {/* About */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">About Jharkhand</h3>
+          <h3 className="text-xl font-semibold text-[#ffbf66] border-b border-[#6b4a31] pb-2 mb-4">About Jharkhand</h3>
           <ul className="space-y-2">
-            <li><Link href="#">History</Link></li>
-            <li><Link href="#">Geography</Link></li>
-            <li><Link href="#">Culture & People</Link></li>
-            <li><Link href="#">Festivals</Link></li>
+            {[
+              "History",
+              "Key Facts",
+              "Geography",
+              "People & Language",
+              "Administration & Economy",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ChevronRight className="w-4 h-4 mt-1 text-[#ffbf66]" />
+                <Link href="#" className="hover:text-white">{item}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Share */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">Share</h3>
+          <h3 className="text-xl font-semibold text-[#ffbf66] border-b border-[#6b4a31] pb-2 mb-4">Share</h3>
           <ul className="space-y-2">
-            <li><Link href="#">Photo Gallery</Link></li>
-            <li><Link href="#">Video Gallery</Link></li>
-            <li><Link href="#">360° Virtual Tour</Link></li>
-            <li><Link href="#">Posters</Link></li>
+            {[
+              "Photo Gallery",
+              "Video Gallery",
+              "360° Virtual Tour",
+              "Posters",
+              "Radio Jingles",
+              "Feedback",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ChevronRight className="w-4 h-4 mt-1 text-[#ffbf66]" />
+                <Link href="#" className="hover:text-white">{item}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
         {/* Policies */}
         <div>
-          <h3 className="text-lg font-semibold mb-4 text-yellow-400">Policies</h3>
+          <h3 className="text-xl font-semibold text-[#ffbf66] border-b border-[#6b4a31] pb-2 mb-4">Policies</h3>
           <ul className="space-y-2">
-            <li><Link href="#">Terms & Conditions</Link></li>
-            <li><Link href="#">Privacy Policy</Link></li>
-            <li><Link href="#">Disclaimer</Link></li>
-            <li><Link href="#">Hyperlinking Policy</Link></li>
+            {[
+              "Terms & Conditions",
+              "Copyright Policy",
+              "Privacy Policy",
+              "Hyperlinking Policy",
+              "Help",
+              "Disclaimer",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ChevronRight className="w-4 h-4 mt-1 text-[#ffbf66]" />
+                <Link href="#" className="hover:text-white">{item}</Link>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* (Removed duplicate Contact Info column) */}
+        {/* Quick Links */}
+        <div>
+          <h3 className="text-xl font-semibold text-[#ffbf66] border-b border-[#6b4a31] pb-2 mb-4">Quick Links</h3>
+          <ul className="space-y-2">
+            {[
+              "Press & Media",
+              "News Letter",
+              "Map",
+              "Weather",
+              "E-Brochure",
+              "FAQs",
+              "DOs & Don'ts",
+            ].map((item) => (
+              <li key={item} className="flex items-start gap-2">
+                <ChevronRight className="w-4 h-4 mt-1 text-[#ffbf66]" />
+                <Link href="#" className="hover:text-white">{item}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      {/* Bottom Bar */}
-      <div className="relative mt-10 border-t border-gray-700 pt-4 text-sm text-gray-300 z-10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p>
-            © {new Date().getFullYear()} Department of Tourism, Jharkhand, India. All Rights Reserved.
-          </p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="hover:text-yellow-400">Privacy Policy</Link>
-            <Link href="#" className="hover:text-yellow-400">Terms & Conditions</Link>
+      {/* Divider line across width */}
+      <div className="relative max-w-7xl mx-auto px-6 mt-6 z-10">
+        <div className="h-px w-full" style={{backgroundColor:'#6b4a31'}} />
+      </div>
+
+      {/* Two-section lower footer: left notice, right feedback capsule */}
+      <div className="relative mt-8 z-10">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:[grid-template-columns:2fr_1fr] gap-8 items-start">
+          {/* Left: notice text block */}
+          <div className="rounded-xl/none pr-8">
+            <p className="text-base leading-7">
+              This is the official website of Department of Tourism, Jharkhand, India. Content on this website is published and managed by Department of Tourism, Jharkhand, India. For any query regarding this website, please contact the <span style={{color:'var(--color-accent)'}}>"Web Information Manager"</span>.
+            </p>
+            <p className="mt-6 text-sm">Last Updated On: 04 September 2025 | 02:36 PM</p>
+          </div>
+
+          {/* Right: feedback pill and visitor number */}
+          <div className="flex flex-col items-start lg:items-end gap-4">
+            <button
+              aria-label="Feedback"
+              className="flex items-center gap-3 px-7 py-3 rounded-full border backdrop-blur-md shadow-sm ring-1 transition-colors"
+              style={{
+                borderColor: '#6b4a31',
+                backgroundColor: 'rgba(255,255,255,0.06)',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.25)',
+              }}
+            >
+              <MessageSquare className="w-6 h-6" style={{color:'#ffbf66'}} />
+              <span className="font-semibold tracking-wide uppercase text-[#ffe0b3]">Feedback</span>
+            </button>
+            <div className="flex items-center gap-2 text-sm">
+              <span>Visitor No. :</span>
+              <span className="px-3 py-1 rounded-sm bg-black/60 font-mono tracking-widest">000008432423</span>
+            </div>
           </div>
         </div>
-        <p className="text-center mt-2">
-          Last Updated On: 04 September 2025 | Visitor No:{" "}
-          <span className="bg-black px-2 py-1 rounded">000000123456</span>
-        </p>
       </div>
     </footer>
   );

@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Menu, Search, User, Heart } from "lucide-react";
+import { Menu, Search, User, Heart, X } from "lucide-react";
 import Image from "next/image";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -13,37 +14,117 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 shadow-md backdrop-blur-md" : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        {/* Left Nav Links */}
-        <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-700">
-          <a href="#" className="hover:text-yellow-500">Destinations</a>
-          <a href="#" className="hover:text-yellow-500">Experiences</a>
-          <a href="#" className="hover:text-yellow-500">Plan your trip</a>
-        </nav>
-
-        {/* Center Logo */}
-        <div className="flex-shrink-0">
-                   <Image
-                           src="/images/newlogo.png" 
-                           alt="Joyful Jharkhand"
-                           width={240}
-                           height={60}
-                           className="object-contain"
-                         />
+    <header className="fixed top-0 left-0 w-full z-50">
+      {/* Top utility bar */}
+      <div
+        className={`w-full text-white ${
+          scrolled ? "border-b-0" : "border-b border-white/10"
+        } overflow-hidden transition-[max-height,opacity,border] duration-300 ${
+          scrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
+        }`} style={{backgroundColor: 'var(--color-primary)'}}
+        data-nav-utility
+      >
+        <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-5">
+            <a href="#" className="flex items-center gap-2 hover:underline">
+              <span className="inline-block w-4 h-4 rounded-[4px] bg-white/20" />
+              <span>Access Screen Reader</span>
+            </a>
+            <a href="#main" className="hover:underline">Skip to main Content</a>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-2">
+              <button className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20">A-</button>
+              <button className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20">A</button>
+              <button className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20">A+</button>
+            </div>
+            <span className="hidden md:inline">ENG / हिन्दी</span>
+            <a href="#login" className="px-4 py-1 rounded font-semibold" style={{backgroundColor: 'var(--color-secondary)', color: 'var(--color-white)'}}>LOGIN</a>
+          </div>
         </div>
+      </div>
 
-        {/* Right Icons */}
-        <div className="flex gap-4 items-center text-gray-700">
-          <span className="text-sm font-semibold">EN</span>
-          <Search size={18} className="hover:text-yellow-500 cursor-pointer" />
-          <User size={18} className="hover:text-yellow-500 cursor-pointer" />
-          <Heart size={18} className="hover:text-yellow-500 cursor-pointer" />
-          <Menu size={22} className="md:hidden hover:text-yellow-500 cursor-pointer" />
+      {/* Main dark navbar */}
+      <div className={`w-full backdrop-blur-lg text-white ${scrolled ? "shadow-lg" : ""}`} style={{backgroundColor: 'rgba(46,125,50,0.75)'}} data-nav-main>
+        <div className="max-w-7xl mx-auto px-6 relative">
+          <div className="flex items-center justify-between py-2">
+            {/* Left: Jharkhand Tourism logo */}
+            <div className="flex items-center gap-4 relative">
+              <div className="relative h-14 flex items-center justify-center overflow-visible">
+                <Image
+                  src="/images/newlogo.png"
+                  alt="Jharkhand Tourism Logo"
+                  width={150}
+                  height={150}
+                  className="object-contain"
+                  priority
+                />
+              </div>
+            </div>
+
+            {/* Center links */}
+            <nav className={`hidden md:flex items-center gap-8 text-sm font-medium`}>
+              {[
+                { label: "Home", href: "#home" },
+                { label: "About us", href: "#about" },
+                { label: "Policies and Circulars", href: "#policies" },
+                { label: "Updates", href: "#updates" },
+                { label: "Investor Facilitation", href: "#investor" },
+                { label: "Write to us", href: "#write" },
+                { label: "Contact", href: "#contact" },
+              ].map((link) => (
+                <a key={link.label} href={link.href} className="relative group hover:text-white">
+                  {link.label}
+                  <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+                </a>
+              ))}
+            </nav>
+
+            {/* Right: search + department title + burger */}
+            <div className="flex items-center gap-4">
+              <button className="hidden md:flex items-center gap-2 px-3 py-2 text-sm rounded-full bg-white/10 hover:bg-white/20">
+                <Search size={16} />
+              </button>
+              <div className="hidden md:flex flex-col leading-tight text-right">
+                <span className="text-base font-semibold">Tourism Department</span>
+                <span className="text-[11px] text-white/80">Government of Jharkhand</span>
+              </div>
+              <button
+                className="md:hidden p-2 rounded-md hover:bg-white/10"
+                onClick={() => setMobileOpen((v) => !v)}
+                aria-label="Toggle Menu"
+              >
+                {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile menu */}
+          <div
+            className={`md:hidden absolute left-0 right-0 top-full bg-[#2F2F3A]/90 backdrop-blur-lg border-t border-white/10 overflow-hidden transition-[max-height,opacity] duration-300 ${
+              mobileOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+            }`}
+          >
+            <div className="pb-4 pt-2 px-6 space-y-3">
+              {[
+                { label: "Home", href: "#home" },
+                { label: "About us", href: "#about" },
+                { label: "Policies and Circulars", href: "#policies" },
+                { label: "Updates", href: "#updates" },
+                { label: "Investor Facilitation", href: "#investor" },
+                { label: "Write to us", href: "#write" },
+                { label: "Contact", href: "#contact" },
+              ].map((link) => (
+                <a key={link.label} href={link.href} className="block px-2 py-2 rounded-md hover:bg-white/10">
+                  {link.label}
+                </a>
+              ))}
+              <button className="flex items-center gap-2 px-3 py-2 text-sm rounded-md bg-white/10 hover:bg-white/20">
+                <Search size={16} />
+                <span>Search</span>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </header>
