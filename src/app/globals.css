@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FDF6EC; /* Off-White */
+  --foreground: #212121; /* Dark Charcoal */
+  --color-primary: #2E7D32; /* Forest Green */
+  --color-primary-dark: #1B5E20; /* Deep Jungle Green */
+  --color-secondary: #A84300; /* Terracotta Red */
+  --color-secondary-dark: #7B241C; /* Tribal Brick Red */
+  --color-accent: #FFB300; /* Mustard Yellow */
+  --color-white: #FFFFFF;
 }
 
 @theme inline {
@@ -10,6 +16,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -21,4 +29,9 @@
 
 body {
   overflow-x: hidden;
+}
+
+/* Footer specific font via next/font variable fallback */
+.footer-font {
+  font-family: var(--font-montserrat), system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
