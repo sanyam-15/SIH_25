@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { Menu, Search, User, Heart, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,7 +22,7 @@ export default function Navbar() {
           scrolled ? "border-b-0" : "border-b border-white/10"
         } overflow-hidden transition-[max-height,opacity,border] duration-300 ${
           scrolled ? "max-h-0 opacity-0" : "max-h-12 opacity-100"
-        }`} style={{backgroundColor: 'var(--color-primary)'}}
+        }`} style={{backgroundColor: 'rgba(71,85,105,0.9)'}}
         data-nav-utility
       >
         <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between text-xs">
@@ -45,7 +46,7 @@ export default function Navbar() {
       </div>
 
       {/* Main dark navbar */}
-      <div className={`w-full backdrop-blur-lg text-white ${scrolled ? "shadow-lg" : ""}`} style={{backgroundColor: 'rgba(46,125,50,0.75)'}} data-nav-main>
+      <div className={`w-full backdrop-blur-lg text-white ${scrolled ? "shadow-lg" : ""}`} style={{backgroundColor: 'rgba(71,85,105,0.9)'}} data-nav-main>
         <div className="max-w-7xl mx-auto px-6 relative">
           <div className="flex items-center justify-between py-2">
             {/* Left: Jharkhand Tourism logo */}
@@ -63,14 +64,29 @@ export default function Navbar() {
             </div>
 
             {/* Center links */}
-            <nav className={`hidden md:flex items-center gap-8 text-sm font-medium`}>
+            <nav className={`hidden md:flex items-center gap-6 text-sm font-medium`}>
+              <Link href="/" className="relative group hover:text-white">
+                Home
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/handicrafts" className="relative group hover:text-white">
+                Handicrafts
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/ecotourism" className="relative group hover:text-white">
+                Ecotourism
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/events" className="relative group hover:text-white">
+                Events
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/homestays" className="relative group hover:text-white">
+                Homestays
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
               {[
-                { label: "Home", href: "#home" },
                 { label: "About us", href: "#about" },
-                { label: "Policies and Circulars", href: "#policies" },
-                { label: "Updates", href: "#updates" },
-                { label: "Investor Facilitation", href: "#investor" },
-                { label: "Write to us", href: "#write" },
                 { label: "Contact", href: "#contact" },
               ].map((link) => (
                 <a key={link.label} href={link.href} className="relative group hover:text-white">
@@ -106,13 +122,23 @@ export default function Navbar() {
             }`}
           >
             <div className="pb-4 pt-2 px-6 space-y-3">
+              <Link href="/" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Home
+              </Link>
+              <Link href="/handicrafts" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Handicrafts
+              </Link>
+              <Link href="/ecotourism" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Ecotourism
+              </Link>
+              <Link href="/events" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Events
+              </Link>
+              <Link href="/homestays" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Homestays
+              </Link>
               {[
-                { label: "Home", href: "#home" },
                 { label: "About us", href: "#about" },
-                { label: "Policies and Circulars", href: "#policies" },
-                { label: "Updates", href: "#updates" },
-                { label: "Investor Facilitation", href: "#investor" },
-                { label: "Write to us", href: "#write" },
                 { label: "Contact", href: "#contact" },
               ].map((link) => (
                 <a key={link.label} href={link.href} className="block px-2 py-2 rounded-md hover:bg-white/10">
