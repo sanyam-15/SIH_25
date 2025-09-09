@@ -6,7 +6,7 @@ import TourismLeaders from "./components/homepage/Message";
 import JharkhandMap from "./components/homepage/JharkhandMap";
 import Handicrafts from "./components/homepage/Handicrafts";
 import Navbar from "./components/homepage/Navbar";
-// import PlanTripForm from "./components/homepage/PlanTripForm";
+import PlanTripForm from "./components/homepage/PlanTripForm";
 import GovPartners from "./components/homepage/GovPartners";
 import InstagramShowcase from "./components/homepage/InstagramShowcase";
 
@@ -21,7 +21,7 @@ export default function Home() {
       <Handicrafts />
       <TourismLeaders />
       <JharkhandMap />
-      {/* <PlanTripForm /> */}
+      <PlanTripForm />
       <InstagramShowcase />
       <GovPartners />
       <Footer />
