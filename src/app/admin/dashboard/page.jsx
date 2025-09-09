@@ -1,12 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import { Card } from "@/app/components/dashboard/Cardpiechart";
 import {
   PieChart, Pie, Cell, Tooltip, Legend,
   LineChart, Line, XAxis, YAxis,
   BarChart, Bar, ResponsiveContainer,
 } from "recharts";
-import { FaUsers, FaCalendarCheck, FaGlobe, FaComments, FaSignOutAlt, FaStar } from "react-icons/fa";
+import {
+  FaUsers, FaCalendarCheck, FaGlobe,
+  FaComments, FaSignOutAlt, FaStar
+} from "react-icons/fa";
 
 // ⭐ Star Rating Renderer
 function StarRating({ rating }) {
@@ -25,14 +30,15 @@ function StarRating({ rating }) {
 
 export default function TourismDashboard() {
   const [dashboardData, setDashboardData] = useState(null);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false); // ✅ modal state
+  const router = useRouter();
 
   useEffect(() => {
-    // 👉 later replace this with API call
     const randomNumber = (min, max) =>
       Math.floor(Math.random() * (max - min + 1)) + min;
 
     const sampleData = {
-      overallRating: 3.6, // ⭐ this can come from backend later
+      overallRating: 3.6,
       stats: {
         totalSignups: randomNumber(5000, 15000),
         onlineUsers: randomNumber(100, 800),
@@ -72,6 +78,11 @@ export default function TourismDashboard() {
   const { overallRating, stats, reviews, timeline } = dashboardData;
   const COLORS = ["#38BDF8", "#F472B6"];
 
+  const handleConfirmLogout = () => {
+    setShowLogoutConfirm(false);
+    router.push("/");
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
       {/* Navbar */}
@@ -82,7 +93,10 @@ export default function TourismDashboard() {
             <button className="hover:text-indigo-600 transition">Overview</button>
             <button className="hover:text-indigo-600 transition">Reports</button>
             <button className="hover:text-indigo-600 transition">Settings</button>
-            <button className="flex items-center text-red-500 hover:text-red-600 transition">
+            <button
+              onClick={() => setShowLogoutConfirm(true)} // ✅ open modal
+              className="flex items-center text-red-500 hover:text-red-600 transition"
+            >
               <FaSignOutAlt className="mr-2" /> Logout
             </button>
           </div>
@@ -139,8 +153,10 @@ export default function TourismDashboard() {
                 <PieChart>
                   <Pie
                     data={reviewData}
-                    dataKey="value" nameKey="name"
-                    cx="50%" cy="50%" outerRadius={80} label
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%" cy="50%" outerRadius={80}
+                    label
                   >
                     {reviewData.map((_, index) => (
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
@@ -189,6 +205,46 @@ export default function TourismDashboard() {
           <p>Powered by Feedback Analytics System</p>
         </div>
       </footer>
+
+      {/* 🔹 Confirmation Modal */}
+      <AnimatePresence>
+        {showLogoutConfirm && (
+          <motion.div
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="bg-white rounded-xl p-6 shadow-lg max-w-sm w-full text-center"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+            >
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                Confirm Logout
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Are you sure you want to logout and return to home?
+              </p>
+              <div className="flex justify-center space-x-4">
+                <button
+                  onClick={() => setShowLogoutConfirm(false)}
+                  className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleConfirmLogout}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+                >
+                  Logout
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
