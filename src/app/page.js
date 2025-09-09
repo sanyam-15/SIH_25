@@ -44,6 +44,15 @@ export default function Home() {
       
       {/* Government Partners */}
       <GovPartners />
+
+       <div style={{ width: "100%", height: "500px" }}>
+      <iframe
+        src="https://www.airpano.com/embed.php?3D=taj-mahal-india"
+        width="100%"
+        height="100%"
+        allowFullScreen
+      />
+    </div>
       
       {/* Footer */}
       <Footer />
