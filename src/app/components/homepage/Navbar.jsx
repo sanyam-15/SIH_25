@@ -40,7 +40,7 @@ export default function Navbar() {
               <button className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20">A+</button>
             </div>
             <span className="hidden md:inline">ENG / हिन्दी</span>
-            <a href="#login" className="px-4 py-1 rounded font-semibold" style={{backgroundColor: 'var(--color-secondary)', color: 'var(--color-white)'}}>LOGIN</a>
+            <a href="/admin/login" className="px-4 py-1 rounded font-semibold" style={{backgroundColor: 'var(--color-secondary)', color: 'var(--color-white)'}}>LOGIN</a>
           </div>
         </div>
       </div>

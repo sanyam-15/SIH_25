@@ -3,11 +3,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
-import LiquidEther from "../components/core/LiquidEther";
+import Image from "next/image"; 
+import LiquidEther from "../../components/core/LiquidEther";
 
-export default function UserLoginPage() {
+export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,8 +33,8 @@ export default function UserLoginPage() {
       if (!res.ok) {
         setError(data.error || "Invalid credentials");
       } else {
-        localStorage.setItem("userToken", data.token);
-        router.push("/"); // ✅ user dashboard
+        localStorage.setItem("adminToken", data.token);
+        router.push("/admin/dashboard");
       }
     } catch (err) {
       console.error(err);
@@ -48,7 +47,7 @@ export default function UserLoginPage() {
       {/* LiquidEther Background */}
       <div className="absolute inset-0 -z-10">
         <LiquidEther
-          colors={["#3B82F6", "#60A5FA", "#93C5FD"]}
+          colors={["#10B981", "#34D399", "#6EE7B7"]}
           mouseForce={20}
           cursorSize={100}
           isViscous={false}
@@ -75,7 +74,7 @@ export default function UserLoginPage() {
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="relative w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-2xl border border-blue-300"
+        className="relative w-full max-w-md rounded-2xl bg-white/90 backdrop-blur-md p-8 shadow-2xl border border-emerald-300"
       >
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
@@ -89,16 +88,14 @@ export default function UserLoginPage() {
               className="rounded-md"
               priority
             />
-            <h1 className="text-2xl font-extrabold text-blue-800">
+            <h1 className="text-2xl font-extrabold text-emerald-800">
               Jharkhand Tourism
             </h1>
           </div>
           <h2 className="mt-4 text-xl text-gray-800 font-semibold">
-            User Portal Login
+            Admin Portal Login
           </h2>
-          <p className="text-sm text-gray-500 italic">
-            Access your personalized dashboard
-          </p>
+          <p className="text-sm text-gray-500 italic">Authorized Access Only</p>
         </div>
 
         {/* Form */}
@@ -107,14 +104,14 @@ export default function UserLoginPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">
-              Email
+              Admin Email
             </label>
             <input
               type="email"
-              placeholder="user@example.com"
+              placeholder="admin@jharkhandtourism.in"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg border px-4 py-2 bg-white/80 text-gray-800 shadow-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-300 outline-none"
+              className="mt-1 w-full rounded-lg border px-4 py-2 bg-white/80 text-gray-800 shadow-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-300 outline-none"
               required
             />
           </div>
@@ -125,34 +122,26 @@ export default function UserLoginPage() {
             </label>
             <input
               type="password"
-              placeholder="Enter your password"
+              placeholder="Enter secure password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg border px-4 py-2 bg-white/80 text-gray-800 shadow-sm focus:border-blue-600 focus:ring-2 focus:ring-blue-300 outline-none"
+              className="mt-1 w-full rounded-lg border px-4 py-2 bg-white/80 text-gray-800 shadow-sm focus:border-emerald-600 focus:ring-2 focus:ring-emerald-300 outline-none"
               required
             />
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-gradient-to-r from-blue-600 to-cyan-500 py-2 text-white font-semibold shadow-lg hover:scale-[1.02] transition-transform"
+            className="w-full rounded-lg bg-gradient-to-r from-emerald-600 to-yellow-500 py-2 text-white font-semibold shadow-lg hover:scale-[1.02] transition-transform"
           >
             Sign In
           </button>
         </form>
 
-        {/* Signup Redirect */}
-        <div className="mt-4 text-center text-sm text-gray-700">
-          Don’t have an account?{" "}
-          <Link href="/signup" className="text-blue-600 font-medium hover:underline">
-            Create one here
-          </Link>
-        </div>
-
         {/* Footer */}
         <div className="mt-6 text-center text-xs text-gray-600">
           Jharkhand Tourism © {new Date().getFullYear()} <br />
-          <span className="text-blue-700 font-medium">Incredible India ✨</span>
+          <span className="text-emerald-700 font-medium">Incredible India ✨</span>
         </div>
       </motion.div>
     </div>

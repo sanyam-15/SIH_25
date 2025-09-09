@@ -113,6 +113,6 @@ async def chat(req: UserRequest):
 
     # Default fallback
     return BotResponse(messages=[
-        Message(type="text", text="I didn’t get that. Try one of these options:"),
+        Message(type="text", text="I didn't get that. Try one of these options:"),
         *main_menu()
     ])
