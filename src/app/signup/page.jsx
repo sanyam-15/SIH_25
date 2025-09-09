@@ -66,9 +66,10 @@ export default function SignupPage() {
     transition={{ duration: 0.5 }}
     className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden"
   >
-    <div className="hidden md:flex relative w-1/2 h-auto bg-[#fffce4] items-center justify-center">
+    <div className="hidden md:flex relative w-1/2 h-auto bg-[#fffff1] items-center justify-center">
       <Image
-        src="/images/canva.png"
+        // src="/images/canva.png"
+        src="/images/realistic-preview.png"
         alt="Jharkhand Tourism"
         fill
         className="object-contain"
