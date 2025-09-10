@@ -236,9 +236,9 @@ export default function JharkhandMap() {
             </ComposableMap>
 
             {/* SVG for connecting lines and dots */}
-            <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 550 450">
+            {/* <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 550 450"> */}
               {/* District center dots */}
-              <circle cx="484" cy="54" r="3" fill="#3b82f6" />
+              {/* <circle cx="484" cy="54" r="3" fill="#3b82f6" />
               <circle cx="467" cy="90" r="3" fill="#3b82f6" />
               <circle cx="412" cy="76" r="3" fill="#3b82f6" />
               <circle cx="440" cy="112" r="3" fill="#3b82f6" />
@@ -261,10 +261,10 @@ export default function JharkhandMap() {
               <circle cx="165" cy="216" r="3" fill="#3b82f6" />
               <circle cx="99" cy="180" r="3" fill="#3b82f6" />
               <circle cx="110" cy="148" r="3" fill="#3b82f6" />
-              <circle cx="66" cy="126" r="3" fill="#3b82f6" />
+              <circle cx="66" cy="126" r="3" fill="#3b82f6" /> */}
               
               {/* Connecting lines */}
-              <line x1="484" y1="54" x2="520" y2="40" stroke="#6b7280" strokeWidth="1" />
+              {/* <line x1="484" y1="54" x2="520" y2="40" stroke="#6b7280" strokeWidth="1" />
               <line x1="467" y1="90" x2="510" y2="85" stroke="#6b7280" strokeWidth="1" />
               <line x1="412" y1="76" x2="450" y2="65" stroke="#6b7280" strokeWidth="1" />
               <line x1="440" y1="112" x2="480" y2="105" stroke="#6b7280" strokeWidth="1" />
@@ -287,8 +287,8 @@ export default function JharkhandMap() {
               <line x1="165" y1="216" x2="120" y2="225" stroke="#6b7280" strokeWidth="1" />
               <line x1="99" y1="180" x2="50" y2="190" stroke="#6b7280" strokeWidth="1" />
               <line x1="110" y1="148" x2="60" y2="155" stroke="#6b7280" strokeWidth="1" />
-              <line x1="66" y1="126" x2="20" y2="135" stroke="#6b7280" strokeWidth="1" />
-            </svg>
+              <line x1="66" y1="126" x2="20" y2="135" stroke="#6b7280" strokeWidth="1" /> */}
+            {/* </svg> */}
 
             {/* District Names positioned outside the map */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
