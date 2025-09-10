@@ -2,11 +2,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getAllPlaces } from "@/app/data/places";
 import { 
   Star, 
   MapPin, 
-  ArrowRight,
+  ArrowLeft,
   Search,
   Filter,
   Grid,
@@ -14,7 +15,16 @@ import {
   Mountain,
   Waves,
   TreePine,
-  Building
+  Building,
+  Camera,
+  Users,
+  Heart,
+  Share2,
+  Clock,
+  IndianRupee,
+  Calendar,
+  ArrowRight,
+  Home
 } from "lucide-react";
 
 export default function PlacesPage() {
@@ -22,13 +32,18 @@ export default function PlacesPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [viewMode, setViewMode] = useState("grid");
+  const router = useRouter();
 
   const categories = [
     { name: "All", icon: Grid, count: places.length },
     { name: "Waterfall", icon: Waves, count: places.filter(p => p.category === "Waterfall").length },
     { name: "Temple", icon: Building, count: places.filter(p => p.category === "Temple").length },
     { name: "Hill Station", icon: Mountain, count: places.filter(p => p.category === "Hill Station").length },
-    { name: "Forest", icon: TreePine, count: places.filter(p => p.category === "Forest").length }
+    { name: "Wildlife Sanctuary", icon: TreePine, count: places.filter(p => p.category === "Wildlife Sanctuary").length },
+    { name: "Dam", icon: Waves, count: places.filter(p => p.category === "Dam").length },
+    { name: "Park", icon: TreePine, count: places.filter(p => p.category === "Park").length },
+    { name: "Garden", icon: TreePine, count: places.filter(p => p.category === "Garden").length },
+    { name: "Valley", icon: Mountain, count: places.filter(p => p.category === "Valley").length }
   ];
 
   const filteredPlaces = places.filter(place => {
@@ -43,7 +58,11 @@ export default function PlacesPage() {
       case "Waterfall": return Waves;
       case "Temple": return Building;
       case "Hill Station": return Mountain;
-      case "Forest": return TreePine;
+      case "Wildlife Sanctuary": return TreePine;
+      case "Dam": return Waves;
+      case "Park": return TreePine;
+      case "Garden": return TreePine;
+      case "Valley": return Mountain;
       default: return MapPin;
     }
   };
@@ -55,11 +74,19 @@ export default function PlacesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <h1 className="text-2xl font-bold text-gray-900">Explore Places</h1>
-            <nav className="hidden md:flex space-x-8">
-              <Link href="/" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">Home</Link>
-              <Link href="/itineraries" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">Itineraries</Link>
-              <Link href="/plan-trip" className="text-gray-600 hover:text-gray-900 font-medium transition-colors">Plan Trip</Link>
-            </nav>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => router.back()}
+                className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back
+              </button>
+              <Link href="/" className="flex items-center text-gray-600 hover:text-gray-900 font-medium transition-colors">
+                <Home className="w-5 h-5 mr-2" />
+                Home
+              </Link>
+            </div>
           </div>
         </div>
       </div>
@@ -77,13 +104,6 @@ export default function PlacesPage() {
           />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-1000"></div>
-          <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-pulse delay-2000"></div>
-        </div>
         
         <div className="relative max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">
@@ -92,25 +112,6 @@ export default function PlacesPage() {
           <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto">
             Explore the hidden gems and popular destinations of Jharkhand. From majestic waterfalls to ancient temples.
           </p>
-          
-          {/* Diamond Section with Baba Baidyanath Image */}
-          <div className="flex justify-center mb-12">
-            <div className="relative">
-              <div className="w-48 h-48 transform rotate-45 overflow-hidden border-4 border-white shadow-2xl">
-                <div className="w-full h-full transform -rotate-45 scale-150">
-                  <Image
-                    src="/images/places/baba_baidyanath.png"
-                    alt="Baba Baidyanath Temple"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-white text-gray-900 px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                Featured Place
-              </div>
-            </div>
-          </div>
           
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto relative">
@@ -152,25 +153,6 @@ export default function PlacesPage() {
               );
             })}
           </div>
-
-          {/* View Mode Toggle */}
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-gray-600">View:</span>
-            <div className="flex bg-white rounded-lg border border-gray-200 p-1">
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`p-2 rounded ${viewMode === "grid" ? 'bg-blue-600 text-white' : 'text-gray-600 hover:text-blue-600'}`}
-              >
-                <Grid className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode("list")}
-                className={`p-2 rounded ${viewMode === "list" ? 'bg-blue-600 text-white' : 'text-gray-600 hover:text-blue-600'}`}
-              >
-                <List className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Results Count */}
@@ -182,123 +164,65 @@ export default function PlacesPage() {
           </p>
         </div>
 
-        {/* Places Grid/List */}
-        {viewMode === "grid" ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPlaces.map((place) => {
-              const CategoryIcon = getCategoryIcon(place.category);
-              return (
-                <Link 
-                  key={place.id} 
-                  href={`/place/${place.id}`}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
-                >
-                  {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <Image
-                      src={place.images[0]}
-                      alt={place.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-white text-gray-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm flex items-center">
-                        <CategoryIcon className="w-4 h-4 mr-1" />
-                        {place.category}
-                      </span>
-                    </div>
-                    <div className="absolute top-3 right-3">
-                      <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm flex items-center">
-                        <Star className="w-3 h-3 text-yellow-400 fill-current mr-1" />
-                        {place.rating}
-                      </div>
+        {/* Places Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredPlaces.map((place) => {
+            const CategoryIcon = getCategoryIcon(place.category);
+            return (
+              <Link 
+                key={place.id} 
+                href={`/place/${place.id}`}
+                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+              >
+                {/* Image */}
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={place.images[0]}
+                    alt={place.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-white text-gray-800 px-3 py-1 rounded-full text-sm font-medium shadow-sm flex items-center">
+                      <CategoryIcon className="w-4 h-4 mr-1" />
+                      {place.category}
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3">
+                    <div className="bg-black bg-opacity-50 text-white px-2 py-1 rounded-full text-sm flex items-center">
+                      <Star className="w-3 h-3 text-yellow-400 fill-current mr-1" />
+                      {place.rating}
                     </div>
                   </div>
+                </div>
 
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                      {place.name}
-                    </h3>
-                    <div className="flex items-center text-gray-600 mb-3">
-                      <MapPin className="w-4 h-4 mr-1" />
-                      <span className="text-sm">{place.location}</span>
+                {/* Content */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    {place.name}
+                  </h3>
+                  <div className="flex items-center text-gray-600 mb-3">
+                    <MapPin className="w-4 h-4 mr-1" />
+                    <span className="text-sm">{place.location}</span>
+                  </div>
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    {place.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                      <span>{place.rating} ({place.reviewCount} reviews)</span>
                     </div>
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {place.description}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                        <span>{place.rating} ({place.reviewCount} reviews)</span>
-                      </div>
-                      <div className="flex items-center text-blue-600 font-medium">
-                        <span className="text-sm">Explore</span>
-                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                      </div>
+                    <div className="flex items-center text-blue-600 font-medium">
+                      <span className="text-sm">Explore</span>
+                      <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                </Link>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {filteredPlaces.map((place) => {
-              const CategoryIcon = getCategoryIcon(place.category);
-              return (
-                <Link 
-                  key={place.id} 
-                  href={`/place/${place.id}`}
-                  className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-6 flex items-center gap-6 group"
-                >
-                  {/* Image */}
-                  <div className="relative w-32 h-24 flex-shrink-0 rounded-lg overflow-hidden">
-                    <Image
-                      src={place.images[0]}
-                      alt={place.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1">
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                        {place.name}
-                      </h3>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                        <span>{place.rating} ({place.reviewCount})</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex items-center gap-4 mb-3">
-                      <div className="flex items-center text-gray-600">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        <span className="text-sm">{place.location}</span>
-                      </div>
-                      <div className="flex items-center text-gray-600">
-                        <CategoryIcon className="w-4 h-4 mr-1" />
-                        <span className="text-sm">{place.category}</span>
-                      </div>
-                    </div>
-                    
-                    <p className="text-gray-600 text-sm line-clamp-2">
-                      {place.description}
-                    </p>
-                  </div>
-
-                  {/* Arrow */}
-                  <div className="flex-shrink-0">
-                    <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-blue-600 group-hover:translate-x-1 transition-all" />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        )}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
 
         {/* No Results */}
         {filteredPlaces.length === 0 && (

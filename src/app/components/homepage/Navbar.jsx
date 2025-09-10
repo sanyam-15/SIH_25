@@ -69,6 +69,10 @@ export default function Navbar() {
                 Home
                 <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
               </Link>
+              <Link href="/places" className="relative group hover:text-white">
+                Places
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
               <Link href="/handicrafts" className="relative group hover:text-white">
                 Handicrafts
                 <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
@@ -132,6 +136,9 @@ export default function Navbar() {
             <div className="pb-4 pt-2 px-6 space-y-3">
               <Link href="/" className="block px-2 py-2 rounded-md hover:bg-white/10">
                 Home
+              </Link>
+              <Link href="/places" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Places
               </Link>
               <Link href="/handicrafts" className="block px-2 py-2 rounded-md hover:bg-white/10">
                 Handicrafts

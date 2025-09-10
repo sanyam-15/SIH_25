@@ -2,10 +2,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, MapPin, Clock, Users, Leaf, Camera, Mountain } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, MapPin, Clock, Users, Leaf, Camera, Mountain, Home } from "lucide-react";
 
 export default function EcotourismPage() {
   const [selectedType, setSelectedType] = useState("all");
+  const router = useRouter();
 
   const ecoDestinations = [
     {
@@ -114,10 +116,19 @@ export default function EcotourismPage() {
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-gray-600 hover:text-gray-900">
-              <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Home
-            </Link>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => router.back()}
+                className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Back
+              </button>
+              <Link href="/" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+                <Home className="w-5 h-5 mr-2" />
+                Home
+              </Link>
+            </div>
             <h1 className="text-2xl font-bold text-gray-900">Ecotourism</h1>
             <div></div>
           </div>
@@ -226,9 +237,9 @@ export default function EcotourismPage() {
                   </div>
                 </div>
                 
-                <button className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors">
+                <Link href={`/ecotourism/${destination.id}`} className="block w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition-colors text-center">
                   Plan Your Visit
-                </button>
+                </Link>
               </div>
             </div>
           ))}

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { getPlaceById } from "@/app/data/places";
 import { 
   ArrowLeft, 
@@ -24,7 +25,8 @@ import {
   Info,
   Mountain,
   TreePine,
-  Waves
+  Waves,
+  Home
 } from "lucide-react";
 
 export default function PlaceDetailsPage({ params }) {
@@ -32,6 +34,7 @@ export default function PlaceDetailsPage({ params }) {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("overview");
   const [isFavorite, setIsFavorite] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchPlaceData = async () => {
@@ -70,60 +73,90 @@ export default function PlaceDetailsPage({ params }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link href="/" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+      <div className="bg-white border-b border-gray-200 px-4 py-4">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => router.back()}
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+            >
               <ArrowLeft className="w-5 h-5 mr-2" />
-              Back to Home
+              Back
+            </button>
+            <Link href="/" className="flex items-center text-gray-600 hover:text-gray-900 transition-colors">
+              <Home className="w-5 h-5 mr-2" />
+              Home
             </Link>
-            <div className="flex items-center space-x-4">
-              <button 
-                onClick={() => setIsFavorite(!isFavorite)}
-                className={`p-2 rounded-full transition-colors ${
-                  isFavorite ? 'text-red-500 bg-red-50' : 'text-gray-400 hover:text-red-500'
-                }`}
-              >
-                <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
-              </button>
-              <button className="p-2 rounded-full text-gray-400 hover:text-blue-500 transition-colors">
-                <Share2 className="w-5 h-5" />
-              </button>
-            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => setIsFavorite(!isFavorite)}
+              className={`p-2 rounded-full transition-colors ${isFavorite ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
+            >
+              <Heart className={`w-5 h-5 ${isFavorite ? 'fill-current' : ''}`} />
+            </button>
+            <button className="p-2 rounded-full text-gray-400 hover:text-gray-600 transition-colors">
+              <Share2 className="w-5 h-5" />
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <div className="relative h-96 md:h-[500px] overflow-hidden">
-        <Image
-          src={place.images[0]}
-          alt={place.name}
-          fill
-          className="object-cover"
-          priority
-        />
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+      {/* Hero Section with 3D Model */}
+      <div className="relative h-96 md:h-[500px] bg-black">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <Image
+            src={place.images[0]}
+            alt={place.name}
+            fill
+            className="object-cover opacity-60"
+            priority
+          />
+        </div>
         
-        {/* Hero Content */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center mb-2">
-              <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
-                {place.category}
-              </span>
-              <div className="flex items-center">
-                <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                <span className="font-semibold">{place.rating}</span>
-                <span className="text-gray-300 ml-1">({place.reviewCount} reviews)</span>
+        {/* Content Layout */}
+        <div className="relative h-full flex items-end">
+          <div className="max-w-7xl mx-auto px-4 pb-8 w-full flex justify-between items-end">
+            {/* Left Side - Place Info */}
+            <div className="flex-1">
+              <div className="flex items-center mb-2">
+                <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mr-4">
+                  {place.category}
+                </span>
+                <div className="flex items-center text-white">
+                  <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
+                  <span className="font-medium">{place.rating}</span>
+                  <span className="text-gray-300 ml-1">({place.reviewCount} reviews)</span>
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">
+                {place.name}
+              </h1>
+              <div className="flex items-center text-white">
+                <MapPin className="w-5 h-5 mr-2" />
+                <span className="text-lg">{place.location}</span>
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-2">{place.name}</h1>
-            <div className="flex items-center text-lg">
-              <MapPin className="w-5 h-5 mr-2" />
-              {place.location}
+            
+            {/* Right Side - 3D Model */}
+            <div className="hidden lg:block flex-shrink-0 ml-8">
+              <div className="relative w-96 h-80 transform hover:scale-105 transition-transform duration-300">
+                <Image
+                  src="/images/places/baba_baidyanath.png"
+                  alt="3D Model"
+                  fill
+                  className="object-contain drop-shadow-2xl filter"
+                  style={{
+                    filter: 'drop-shadow(0 25px 50px rgba(0, 0, 0, 0.5)) drop-shadow(0 10px 25px rgba(0, 0, 0, 0.3))'
+                  }}
+                />
+                {/* Additional shadow layers for 3D effect */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent rounded-lg transform translate-y-2 -z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/10 rounded-lg transform translate-x-2 translate-y-4 -z-20"></div>
+              </div>
             </div>
           </div>
         </div>
