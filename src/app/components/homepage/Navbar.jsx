@@ -73,6 +73,14 @@ export default function Navbar() {
                 Handicrafts
                 <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
               </Link>
+              <Link href="/artifacts" className="relative group hover:text-white">
+                Artifacts
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
+              <Link href="/tribes" className="relative group hover:text-white">
+                Tribes
+                <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              </Link>
               <Link href="/ecotourism" className="relative group hover:text-white">
                 Ecotourism
                 <span className="pointer-events-none absolute left-0 -bottom-1 h-[2px] w-0 bg-white transition-all duration-300 group-hover:w-full" />
@@ -127,6 +135,12 @@ export default function Navbar() {
               </Link>
               <Link href="/handicrafts" className="block px-2 py-2 rounded-md hover:bg-white/10">
                 Handicrafts
+              </Link>
+              <Link href="/artifacts" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Artifacts
+              </Link>
+              <Link href="/tribes" className="block px-2 py-2 rounded-md hover:bg-white/10">
+                Tribes
               </Link>
               <Link href="/ecotourism" className="block px-2 py-2 rounded-md hover:bg-white/10">
                 Ecotourism
