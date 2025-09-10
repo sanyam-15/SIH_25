@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc"; 
 
 export default function SignupPage() {
   const router = useRouter();
@@ -59,32 +61,31 @@ export default function SignupPage() {
   };
 
   return (
-<div className="flex items-center justify-center min-h-screen bg-[#f3f3f3] px-4">
-  <motion.div
-    initial={{ opacity: 0, scale: 0.9 }}
-    animate={{ opacity: 1, scale: 1 }}
-    transition={{ duration: 0.5 }}
-    className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden"
-  >
-    <div className="hidden md:flex relative w-1/2 h-auto bg-[#fffff1] items-center justify-center">
-      <Image
-        // src="/images/canva.png"
-        src="/images/realistic-preview.png"
-        alt="Jharkhand Tourism"
-        fill
-        className="object-contain"
-        priority
-      />
-    </div>
-
-    {/* Right Form */}
-    <div className="w-full md:w-1/2 px-6 py-8 md:py-12 flex items-center justify-center">
+    <div className="flex items-center justify-center min-h-screen bg-[#f3f3f3] px-4">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="w-full max-w-md"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex flex-col md:flex-row w-full max-w-4xl bg-white rounded-2xl shadow-xl overflow-hidden"
       >
+        <div className="hidden md:flex relative w-1/2 h-auto bg-[#fffff1] items-center justify-center">
+          <Image
+            src="/images/realistic-preview.png"
+            alt="Jharkhand Tourism"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+
+        {/* Right Form */}
+        <div className="w-full md:w-1/2 px-6 py-8 md:py-12 flex items-center justify-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="w-full max-w-md"
+          >
             {/* Logo & Header */}
             <div className="flex flex-col items-center mb-6">
               <Image
@@ -99,6 +100,25 @@ export default function SignupPage() {
               <h2 className="mt-2 text-lg text-gray-700 font-semibold">
                 Signup Portal
               </h2>
+            </div>
+
+            {/* Google Login */}
+            <button
+              type="button"
+              onClick={() => signIn("google", { callbackUrl: "/" })}
+              className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg shadow-sm hover:bg-gray-100 transition"
+            >
+              <FcGoogle size={22} />
+              <span className="font-medium text-gray-700">
+                Continue with Google
+              </span>
+            </button>
+
+            {/* Divider */}
+            <div className="my-4 flex items-center w-full">
+              <hr className="flex-1 border-gray-300" />
+              <span className="px-2 text-sm text-gray-500">or</span>
+              <hr className="flex-1 border-gray-300" />
             </div>
 
             {/* Form */}

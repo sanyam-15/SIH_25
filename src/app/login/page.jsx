@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import LiquidEther from "../components/core/LiquidEther";
+import { signIn } from "next-auth/react"; // 👈 NextAuth Google login
+import { FcGoogle } from "react-icons/fc"; // 👈 Google icon
 
 export default function UserLoginPage() {
   const [email, setEmail] = useState("");
@@ -79,7 +81,6 @@ export default function UserLoginPage() {
       >
         {/* Header */}
         <div className="flex flex-col items-center mb-6">
-          {/* Official Logo */}
           <div className="flex items-center space-x-3">
             <Image
               src="/images/logo.png"
@@ -99,6 +100,25 @@ export default function UserLoginPage() {
           <p className="text-sm text-gray-500 italic">
             Access your personalized dashboard
           </p>
+        </div>
+
+        {/* Google Login */}
+        <button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="w-full flex items-center justify-center gap-3 border border-gray-300 py-2 rounded-lg shadow-sm hover:bg-gray-100 transition mb-4"
+        >
+          <FcGoogle size={22} />
+          <span className="font-medium text-gray-700">
+            Continue with Google
+          </span>
+        </button>
+
+        {/* Divider */}
+        <div className="my-4 flex items-center w-full">
+          <hr className="flex-1 border-gray-300" />
+          <span className="px-2 text-sm text-gray-500">or</span>
+          <hr className="flex-1 border-gray-300" />
         </div>
 
         {/* Form */}
